@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AppointmentDB {
-    private static final String DB_FILE    = "appointments.txt";//save appointments to a text file like pra 2 
+    private static final String DB_FILE    = "appointments.txt";
     private static final String IMAGE_DIR  = "images/";
     private List<Appointment> appointments;
 
@@ -49,6 +49,45 @@ public class AppointmentDB {
     public void addAppointment(Appointment a) {
         appointments.add(a);
         saveToFile();
+    }
+
+    // Update appointment by 1-based index
+    public boolean updateAppointment(int index, Appointment newAppointment) {
+        int i = index - 1;
+        if (i < 0 || i >= appointments.size()) return false;
+
+        Appointment oldAppointment = appointments.get(i);
+        
+        // If new appointment doesn't have an image but old one did, keep the old image
+        String imageFile = newAppointment.getImageFile();
+        if (imageFile.isEmpty() && oldAppointment.hasImage()) {
+            // Keep the old image
+            imageFile = oldAppointment.getImageFile();
+            // Create new appointment with old image
+            newAppointment = new Appointment(
+                newAppointment.getDate(),
+                newAppointment.getTime(),
+                newAppointment.getPerson(),
+                newAppointment.getDescription(),
+                imageFile
+            );
+        } else if (!imageFile.isEmpty() && oldAppointment.hasImage() && 
+                   !imageFile.equals(oldAppointment.getImageFile())) {
+            // New image uploaded, delete old image
+            File oldImageFile = new File(IMAGE_DIR + oldAppointment.getImageFile());
+            if (oldImageFile.exists()) oldImageFile.delete();
+        }
+        
+        appointments.set(i, newAppointment);
+        saveToFile();
+        return true;
+    }
+
+    // Get appointment by 1-based index
+    public Appointment getAppointment(int index) {
+        int i = index - 1;
+        if (i < 0 || i >= appointments.size()) return null;
+        return appointments.get(i);
     }
 
     // Delete appointment by 1-based index
