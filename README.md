@@ -39,10 +39,11 @@ http://localhost:55555
 To generate the MD5 digest of the executable for submission:
 
 ```bash
-md5sum Appointly.jar
+md5sum Appointly.jar //3add26fdc362ab5d15542c093714b683 Appointly.jar
 OR
-md5sum HttpServer.java
+md5sum HttpServer.java //b811e8967b77fc46b53085f3ea24330d  HttpServer.java
 ```
+
 
 The JAR file is the executable, this is what should be hashed and submitted. we can also use HttpServer file as its the "executable"
 
