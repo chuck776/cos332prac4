@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AppointmentDB {
-    private static final String DB_FILE    = "appointments.txt";
+    private static final String DB_FILE    = "appointments.txt"; //save appointments to a text file like pra 2
     private static final String IMAGE_DIR  = "images/";
     private List<Appointment> appointments;
 
